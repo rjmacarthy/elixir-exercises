@@ -3,7 +3,7 @@ defmodule Numbers do
 
   def start(_type, _args) do
     Numbers.main()
-    Supervisor.start_link([], strategy: :one_for_one)
+    Supervisor.start_link(fn -> nil end, name: __MODULE__)
   end
 
   def main do

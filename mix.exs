@@ -14,7 +14,7 @@ defmodule Example.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      mod: {Functional, []}, # Entry point of the application
+      mod: {Strings, []}, # Entry point of the application
       extra_applications: [:logger]
     ]
   end
