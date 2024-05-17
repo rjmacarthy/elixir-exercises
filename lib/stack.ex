@@ -1,7 +1,24 @@
 defmodule Stack do
-  use GenServer
+  @moduledoc """
+  A simple stack implementation using a GenServer.
+  """
+  use GenServer, restart: :transient, shutdown: 10_000
 
-  # Callbacks
+  # Client
+
+  def start_link(default) when is_list(default) do
+    GenServer.start_link(__MODULE__, default)
+  end
+
+  def push(pid, element) do
+    GenServer.cast(pid, {:push, element})
+  end
+
+  def pop(pid) do
+    GenServer.call(pid, :pop)
+  end
+
+  # Server (callbacks)
 
   @impl true
   def init(stack) do
@@ -18,16 +35,3 @@ defmodule Stack do
     {:noreply, [element | state]}
   end
 end
-
-# Start the server
-{:ok, pid} = GenServer.start_link(Stack, [:hello])
-
-# This is the client
-GenServer.call(pid, :pop)
-#=> :hello
-
-GenServer.cast(pid, {:push, :world})
-#=> :ok
-
-GenServer.call(pid, :pop)
-#=> :world
